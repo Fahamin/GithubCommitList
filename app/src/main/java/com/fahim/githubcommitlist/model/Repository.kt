@@ -1,4 +1,4 @@
-package com.fahim.githubcommitlist.Model
+package com.fahim.githubcommitlist.model
 
 data class Repository(
     val archive_url: String,

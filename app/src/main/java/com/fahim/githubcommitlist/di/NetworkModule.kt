@@ -1,7 +1,7 @@
-package com.velmurugan.paging3android.DI
+package com.fahim.githubcommitlist.di
 
-import com.fahim.githubcommitlist.Utils.Constance.BASE_URL
-import com.velmurugan.paging3android.Retrofit.CommitApiService
+import com.fahim.githubcommitlist.utils.Constance.BASE_URL
+import com.fahim.githubcommitlist.api.CommitApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

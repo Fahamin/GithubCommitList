@@ -1,4 +1,4 @@
-package com.fahim.githubcommitlist.Model
+package com.fahim.githubcommitlist.model
 
 data class Parent(
     val html_url: String,

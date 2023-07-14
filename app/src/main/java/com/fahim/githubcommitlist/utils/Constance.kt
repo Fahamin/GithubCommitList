@@ -1,4 +1,4 @@
-package com.fahim.githubcommitlist.Utils
+package com.fahim.githubcommitlist.utils
 
 object Constance {
     const val BASE_URL = "https://api.github.com/search/"

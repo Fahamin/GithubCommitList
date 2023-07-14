@@ -1,6 +1,6 @@
-package com.fahim.githubcommitlist.Model
+package com.fahim.githubcommitlist.model
 
-data class Author(
+data class Owner(
     val avatar_url: String,
     val events_url: String,
     val followers_url: String,

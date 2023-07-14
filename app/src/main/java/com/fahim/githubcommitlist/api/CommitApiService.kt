@@ -1,6 +1,6 @@
-package com.velmurugan.paging3android.Retrofit
+package com.fahim.githubcommitlist.api
 
-import com.fahim.githubcommitlist.Model.CommitModel
+import com.fahim.githubcommitlist.model.CommitModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
