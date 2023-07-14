@@ -1,35 +1,36 @@
-package com.fahim.githubcommitlist.ui.home
+package com.fahim.githubcommitlist.view.commit
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.fahim.githubcommitlist.adapter.CommitPagerAdapter
-import com.fahim.githubcommitlist.databinding.FragmentHomeBinding
+import com.fahim.githubcommitlist.databinding.FragmentCommitBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class CommitFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentCommitBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = CommitPagerAdapter()
+    private val adapter = context?.let { CommitPagerAdapter(it) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val homeViewModel = ViewModelProvider(this).get(CommitViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentCommitBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
 
@@ -39,19 +40,18 @@ class HomeFragment : Fragment() {
 
         homeViewModel.errorMessage.observe(viewLifecycleOwner) {
             Log.e("error", it.toString())
-
-            // Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
         lifecycleScope.launch {
             homeViewModel.getCommitList().observe(viewLifecycleOwner) {
                 it?.let {
-                    adapter.submitData(lifecycle, it)
+                    adapter?.submitData(lifecycle, it)
                 }
             }
         }
 
-        adapter.addLoadStateListener { loadState ->
+        adapter?.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading ||
                 loadState.append is LoadState.Loading
             )
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
                 }
                 errorState?.let {
                     Log.e("error", it.error.toString())
-                    // Toast.makeText(this, it.error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it.error.toString(), Toast.LENGTH_LONG).show()
                 }
 
             }

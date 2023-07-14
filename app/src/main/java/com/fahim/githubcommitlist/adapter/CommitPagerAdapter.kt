@@ -1,19 +1,26 @@
 package com.fahim.githubcommitlist.adapter
+
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.fahim.githubcommitlist.model.Item
+import com.bumptech.glide.Glide
 import com.fahim.githubcommitlist.databinding.CommitAdapterItemBinding
+import com.fahim.githubcommitlist.model.Item
 
-class CommitPagerAdapter :
+class CommitPagerAdapter(private var context: Context) :
     PagingDataAdapter<Item, CommitPagerAdapter.CommitViewHolder>(CommitComparator) {
 
 
     override fun onBindViewHolder(holder: CommitViewHolder, position: Int) {
         val item = getItem(position)
-        holder.view.tvSha.text = item?.comments_url
+        holder.view.tvMessage.text = item?.commit?.message
+        holder.view.tvAuthorName.text = item?.author?.login
+        holder.view.tvTimeDate.text = item?.commit?.author?.date
+        Glide.with(context).load(item?.author?.avatar_url).into(holder.view.ivAuthor);
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommitViewHolder {

@@ -1,4 +1,4 @@
-package com.fahim.githubcommitlist.ui.home
+package com.fahim.githubcommitlist.view.commit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private var commitRepository: CommitRepository) :
+class CommitViewModel @Inject constructor(private var commitRepository: CommitRepository) :
     ViewModel() {
 
     val errorMessage = MutableLiveData<String>()
