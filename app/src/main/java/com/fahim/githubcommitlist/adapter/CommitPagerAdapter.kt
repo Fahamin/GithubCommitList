@@ -9,11 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fahim.githubcommitlist.databinding.CommitAdapterItemBinding
 import com.fahim.githubcommitlist.model.Item
+import com.fahim.githubcommitlist.utils.AdapterItemClickListener
 
-class CommitPagerAdapter(private var context: Context) :
-    PagingDataAdapter<Item, CommitPagerAdapter.CommitViewHolder>(CommitComparator) {
+class CommitPagerAdapter(
+    private var context: Context,
+    private var itemClickListener: AdapterItemClickListener
+) : PagingDataAdapter<Item, CommitPagerAdapter.CommitViewHolder>(CommitComparator) {
 
-
+init {
+    context = this.context
+}
     override fun onBindViewHolder(holder: CommitViewHolder, position: Int) {
         val item = getItem(position)
         holder.view.tvMessage.text = item?.commit?.message
@@ -21,6 +26,10 @@ class CommitPagerAdapter(private var context: Context) :
         holder.view.tvTimeDate.text = item?.commit?.author?.date
         Glide.with(context).load(item?.author?.avatar_url).into(holder.view.ivAuthor);
 
+
+        holder.itemView.setOnClickListener {
+            itemClickListener.itemClickListener(position)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommitViewHolder {

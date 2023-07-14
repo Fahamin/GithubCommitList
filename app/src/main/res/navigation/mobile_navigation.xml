@@ -9,13 +9,29 @@
         android:id="@+id/navigation_commit"
         android:name="com.fahim.githubcommitlist.view.commit.CommitFragment"
         android:label="@string/title_commit"
-        tools:layout="@layout/fragment_commit" />
+        tools:layout="@layout/fragment_commit">
+        <action
+            android:id="@+id/action_navigation_commit_to_navigation_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.fahim.githubcommitlist.view.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_commit"
+            app:destination="@id/navigation_commit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
 
 </navigation>

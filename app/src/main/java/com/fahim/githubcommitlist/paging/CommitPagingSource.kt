@@ -2,9 +2,9 @@ package com.fahim.githubcommitlist.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.fahim.githubcommitlist.utils.Constance.ITEMS_PER_PAGE
 import com.fahim.githubcommitlist.api.CommitApiService
 import com.fahim.githubcommitlist.model.Item
+import com.fahim.githubcommitlist.utils.Constance.ITEMS_PER_PAGE
 
 class CommitPagingSource constructor(private var commitApiService: CommitApiService) :
     PagingSource<Int, Item>() {
@@ -35,3 +35,4 @@ class CommitPagingSource constructor(private var commitApiService: CommitApiServ
         }
     }
 }
+

@@ -10,19 +10,24 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.fahim.githubcommitlist.R
 import com.fahim.githubcommitlist.adapter.CommitPagerAdapter
 import com.fahim.githubcommitlist.databinding.FragmentCommitBinding
+import com.fahim.githubcommitlist.utils.AdapterItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CommitFragment : Fragment() {
+class CommitFragment : Fragment(), AdapterItemClickListener {
 
     private var _binding: FragmentCommitBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = context?.let { CommitPagerAdapter(it) }
+    private lateinit var adapter: CommitPagerAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,15 +37,17 @@ class CommitFragment : Fragment() {
 
         _binding = FragmentCommitBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        adapter = CommitPagerAdapter(requireContext(), this)
 
         binding.apply {
+
             recyclerview.adapter = adapter
         }
 
         homeViewModel.errorMessage.observe(viewLifecycleOwner) {
             Log.e("error", it.toString())
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+
+            // Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
         lifecycleScope.launch {
@@ -81,5 +88,9 @@ class CommitFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun itemClickListener(pos: Int) {
+        findNavController().navigate(R.id.action_navigation_commit_to_navigation_profile)
     }
 }
