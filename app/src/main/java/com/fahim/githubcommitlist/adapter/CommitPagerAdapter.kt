@@ -1,12 +1,15 @@
 package com.fahim.githubcommitlist.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fahim.githubcommitlist.R
 import com.fahim.githubcommitlist.databinding.CommitAdapterItemBinding
 import com.fahim.githubcommitlist.model.Item
 import com.fahim.githubcommitlist.utils.AdapterItemClickListener
@@ -16,9 +19,10 @@ class CommitPagerAdapter(
     private var itemClickListener: AdapterItemClickListener
 ) : PagingDataAdapter<Item, CommitPagerAdapter.CommitViewHolder>(CommitComparator) {
 
-init {
-    context = this.context
-}
+    init {
+        context = this.context
+    }
+
     override fun onBindViewHolder(holder: CommitViewHolder, position: Int) {
         val item = getItem(position)
         holder.view.tvMessage.text = item?.commit?.message
@@ -28,7 +32,14 @@ init {
 
 
         holder.itemView.setOnClickListener {
-            itemClickListener.itemClickListener(position)
+            val bundle = Bundle()
+
+            //itemClickListener.itemClickListener(position)
+            bundle.putString("userName", item?.author?.login)
+            bundle.putString("userEmail", item?.commit?.author?.email)
+            bundle.putString("userImage", item?.author?.avatar_url)
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_navigation_commit_to_navigation_profile,bundle)
+
         }
     }
 

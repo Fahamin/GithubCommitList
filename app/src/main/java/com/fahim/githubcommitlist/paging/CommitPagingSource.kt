@@ -13,7 +13,7 @@ class CommitPagingSource constructor(private var commitApiService: CommitApiServ
             val position = params.key ?: 1
             val response = commitApiService.getCommitFromRepo(
                 "main",
-                "flutter/flutter",
+                "cocogitto/cocogitto",
                 position,
                 ITEMS_PER_PAGE
             )

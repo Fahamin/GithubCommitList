@@ -27,20 +27,20 @@ class CommitFragment : Fragment(), AdapterItemClickListener {
 
     private lateinit var adapter: CommitPagerAdapter
 
+    private lateinit var list: List<com.fahim.githubcommitlist.model.Item>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(CommitViewModel::class.java)
+        val homeViewModel = ViewModelProvider(this)[CommitViewModel::class.java]
 
         _binding = FragmentCommitBinding.inflate(inflater, container, false)
         val root: View = binding.root
         adapter = CommitPagerAdapter(requireContext(), this)
 
         binding.apply {
-
             recyclerview.adapter = adapter
         }
 
@@ -53,7 +53,10 @@ class CommitFragment : Fragment(), AdapterItemClickListener {
         lifecycleScope.launch {
             homeViewModel.getCommitList().observe(viewLifecycleOwner) {
                 it?.let {
+
                     adapter?.submitData(lifecycle, it)
+                    list = adapter.snapshot().items
+
                 }
             }
         }
@@ -79,11 +82,8 @@ class CommitFragment : Fragment(), AdapterItemClickListener {
 
             }
         }
-
-
         return root
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -91,6 +91,12 @@ class CommitFragment : Fragment(), AdapterItemClickListener {
     }
 
     override fun itemClickListener(pos: Int) {
-        findNavController().navigate(R.id.action_navigation_commit_to_navigation_profile)
+        val bundle = Bundle()
+        val item = list[pos]
+        bundle.putString("userName", item.author.login)
+        bundle.putString("userEmail", item.commit.author.email)
+        bundle.putString("userImage", item.author.avatar_url)
+
+        findNavController().navigate(R.id.action_navigation_commit_to_navigation_profile,bundle)
     }
 }
