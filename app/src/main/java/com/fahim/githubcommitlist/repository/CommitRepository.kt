@@ -1,6 +1,7 @@
 package com.fahim.githubcommitlist.repository
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -25,5 +26,17 @@ class CommitRepository @Inject constructor(private val commitApiService: CommitA
                 CommitPagingSource(commitApiService)
             }, initialKey = 1
         ).liveData
+    }
+
+
+    suspend fun getCommitListBackground() {
+        val result = commitApiService.getCommitFromRepo(
+            "main",
+            "cocogitto/cocogitto",
+            3,
+            ITEMS_PER_PAGE
+        )
+        Log.e("Fahamin", result.message())
+
     }
 }
